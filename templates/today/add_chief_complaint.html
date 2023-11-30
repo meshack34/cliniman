@@ -1,0 +1,18 @@
+<!-- Your form to add chief complaints -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+<!-- Display added chief complaints -->
+<h2>Added Chief Complaints:</h2>
+<ul>
+    {% for complaint in chief_complaints %}
+        <li>{{ complaint.chief_complaint_text }} - {{ complaint.timestamp }}</li>
+        <li>History of Presenting Complaint: {{ complaint.history_presenting_complaint_text }}</li>
+        <hr>
+    {% empty %}
+        <li>No chief complaints added yet.</li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'users/doctorsidenav.html' %}
+            <div class="col-md-7 col-lg-8 col-xl-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card dash-card">
+                            <div class="card-body">
+                                <h2>List of Patients</h2>
+                                <table class="table table-hover table-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient ID</th>
+                                            <th>Patient Name</th>
+                                            <th>Date Created</th>
+                                            <!-- Add more headers based on the patient details you want to display -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for patient_appointment in patient_appointment %}
+                                            <tr>
+                                                
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="{% url 'enter_chief_complaint' patient_appointment.patient.id %}">PT-000-{{ patient_appointment.patient.id }}</a>
+                                                    </h2>
+                                                </td>
+
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="{% url 'current_patient' patient_appointment.patient.id %}">{{ patient_appointment.patient.user.first_name }} {{ patient_appointment.patient.user.last_name }}</a>
+                                                    </h2>
+                                                </td>
+                                                <td>{{ patient_appointment.date_created }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

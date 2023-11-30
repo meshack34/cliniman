@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'users/doctorsidenav.html' %}
+            <div class="col-md-3 pr-0">
+                <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
+                    <!-- Patients Tab -->
+                    <li class="w-100"><a class="active show" href="#mrtab1" data-toggle="tab">Patients</a></li>
+                    <!-- Add other list items for tabs as needed -->
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card dash-card">
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <!-- Tab for Patients -->
+                                    <div class="tab-pane fade show active" id="mrtab1">
+                                        <!-- Display list of patients -->
+                                        <ul>
+                                            {% for patient in patients %}
+                                                <li>
+                                                    <a href="{% url 'consultant_page' patient_id=patient.id %}">{{ patient.user.first_name }} {{ patient.user.last_name }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- End of Tab for Patients -->
+
+                                    <!-- Other tab panes -->
+                                    <!-- Add content for other tabs as needed -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-enter-chief-tab" data-toggle="pill" href="#v-pills-enter-chief" role="tab" aria-controls="v-pills-enter-chief" aria-selected="true">Enter Chief Complaint</a>
+                        <a class="nav-link" id="v-pills-enter-hospital-history-tab" data-toggle="pill" href="#v-pills-enter-hospital-history" role="tab" aria-controls="v-pills-enter-hospital-history" aria-selected="false">Enter Hospital History</a>
+                        
+                        <a class="nav-link" id="v-pills-enter-examination-tab" data-toggle="pill" href="#v-pills-enter-examination" role="tab" aria-controls="v-pills-enter-examination" aria-selected="false">Enter Examination</a>
+                        <a class="nav-link" id="v-pills-enter-investigations-tab" data-toggle="pill" href="#v-pills-enter-investigations" role="tab" aria-controls="v-pills-enter-investigations" aria-selected="false">Enter Investigations</a>
+                        <a class="nav-link" id="v-pills-enter-vitals-tab" data-toggle="pill" href="#v-pills-enter-vitals" role="tab" aria-controls="v-pills-enter-vitals" aria-selected="false">Enter Vitals</a>
+                        <a class="nav-link" id="v-pills-enter-labtest-tab" data-toggle="pill" href="#v-pills-enter-labtest" role="tab" aria-controls="v-pills-enter-labtest" aria-selected="false">Enter LabTest</a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <!-- Enter Chief Complaint Tab Content -->
+                        <div class="tab-pane fade show active" id="v-pills-enter-chief" role="tabpanel" aria-labelledby="v-pills-enter-chief-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Enter Chief Complaint</h4>
+                                    <!-- Chief Complaint Form -->
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="id_chief_complaint_text">Chief Complaint:</label>
+                                            <textarea class="form-control" id="id_chief_complaint_text" name="chief_complaint_text"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_history_presenting_complaint_text">Presenting Complaint:</label>
+                                            <textarea class="form-control" id="id_history_presenting_complaint_text" name="history_presenting_complaint_text"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                    {% if saved_chief_complaints %}
+                                        <h5>Saved Chief Complaints:</h5>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Chief Complaint</th>
+                                                    <th>Presenting Complaint</th>
+                                                    <th>Date Added</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for complaint in saved_chief_complaints %}
+                                                    <tr>
+                                                        <td>{{ complaint.chief_complaint_text }}</td>
+                                                        <td>{{ complaint.history_presenting_complaint_text }}</td>
+                                                        <td>{{ complaint.timestamp }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                        <p>No chief complaints found for this patient.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enter Hospital History Tab Content -->
+                        <div class="tab-pane fade" id="v-pills-enter-hospital-history" role="tabpanel" aria-labelledby="v-pills-enter-hospital-history-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Enter Hospital History</h4>
+                                    <!-- Hospital History Form -->
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="id_surgical_history">Surgical History:</label>
+                                            <textarea class="form-control" id="id_surgical_history" name="surgical_history"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_family_history">Family History:</label>
+                                            <textarea class="form-control" id="id_family_history" name="family_history"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_social_history">Social History:</label>
+                                            <textarea class="form-control" id="id_social_history" name="social_history"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_pediatric_history">Pediatric History:</label>
+                                            <textarea class="form-control" id="id_pediatric_history" name="pediatric_history"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_obstetric_history">Obstetric History:</label>
+                                            <textarea class="form-control" id="id_obstetric_history" name="obstetric_history"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                    {% if saved_hospital_histories %}
+                                        <h5>Saved Hospital Histories:</h5>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Surgical History</th>
+                                                    <th>Family History</th>
+                                                    <th>Social History</th>
+                                                    <th>Pediatric History</th>
+                                                    <th>Obstetric History</th>
+                                                    <th>Date Added</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for history in saved_hospital_histories %}
+                                                    <tr>
+                                                        <td>{{ history.surgical_history }}</td>
+                                                        <td>{{ history.family_history }}</td>
+                                                        <td>{{ history.social_history }}</td>
+                                                        <td>{{ history.pediatric_history }}</td>
+                                                        <td>{{ history.obstetric_history }}</td>
+                                                        <td>{{ history.timestamp }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                        <p>No hospital histories found for this patient.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane fade" id="v-pills-enter-examination" role="tabpanel" aria-labelledby="v-pills-enter-examination-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Enter Examination</h4>
+                                    <!-- Examination Form -->
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="id_examination_name">Examination Name:</label>
+                                            <select class="form-control" id="id_examination_name" name="examination_name">
+                                                {% for choice in form.examination_name.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_description">Description:</label>
+                                            <textarea class="form-control" id="id_description" name="description"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_date">Date:</label>
+                                            <input type="date" class="form-control" id="id_date" name="date">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                    {% if saved_examinations %}
+                                        <h5>Saved Examinations:</h5>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Examination Name</th>
+                                                    <th>Description</th>
+                                                    <th>Date Added</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for examination in saved_examinations %}
+                                                    <tr>
+                                                        <td>{{ examination.get_examination_name_display }}</td>
+                                                        <td>{{ examination.description }}</td>
+                                                        <td>{{ examination.timestamp }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                        <p>No examinations found for this patient.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                                                
+
+                        <div class="tab-pane fade" id="v-pills-enter-investigations" role="tabpanel" aria-labelledby="v-pills-enter-investigations-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Enter Investigations</h4>
+                                    <!-- Investigations Form -->
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="id_investigation_name">Investigation Name:</label>
+                                            <input type="text" class="form-control" id="id_investigation_name" name="investigation_name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_description">Description:</label>
+                                            <textarea class="form-control" id="id_description" name="description"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_date">Date:</label>
+                                            <input type="date" class="form-control" id="id_date" name="date">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                    {% if saved_investigations %}
+                                        <h5>Saved Investigations:</h5>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Investigation Name</th>
+                                                    <th>Description</th>
+                                                    <th>Date Added</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for investigation in saved_investigations %}
+                                                    <tr>
+                                                        <td>{{ investigation.investigation_name }}</td>
+                                                        <td>{{ investigation.description }}</td>
+                                                        <td>{{ investigation.timestamp }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                        <p>No investigations found for this patient.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="tab-pane fade" id="v-pills-enter-vitals" role="tabpanel" aria-labelledby="v-pills-enter-vitals-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Enter Vitals</h4>
+                                    <!-- Vitals Form -->
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="id_vital_name">Vital Name:</label>
+                                            <input type="text" class="form-control" id="id_vital_name" name="vital_name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_value">Value:</label>
+                                            <input type="text" class="form-control" id="id_value" name="value">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_unit">Unit:</label>
+                                            <input type="text" class="form-control" id="id_unit" name="unit">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                    {% if saved_vitals %}
+                                        <h5>Saved Vitals:</h5>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Vital Name</th>
+                                                    <th>Value</th>
+                                                    <th>Unit</th>
+                                                    <th>Date Added</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for vital in saved_vitals %}
+                                                    <tr>
+                                                        <td>{{ vital.vital_name }}</td>
+                                                        <td>{{ vital.value }}</td>
+                                                        <td>{{ vital.unit }}</td>
+                                                        <td>{{ vital.timestamp }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                        <p>No vitals found for this patient.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="v-pills-enter-lab-test" role="tabpanel" aria-labelledby="v-pills-enter-lab-test-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Enter Lab Test</h4>
+                                    <!-- Lab Test Form -->
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="id_test_name">Test Name:</label>
+                                            <select class="form-control" id="id_test_name" name="test_name">
+                                                <option value="Blood Test">Blood Test</option>
+                                                <option value="Urine Test">Urine Test</option>
+                                                <option value="X-Ray">X-Ray</option>
+                                                <option value="MRI Scan">MRI Scan</option>
+                                                <option value="CT Scan">CT Scan</option>
+                                                <option value="Other">Other</option>
+                                                <!-- Add other options as needed -->
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_result">Result:</label>
+                                            <textarea class="form-control" id="id_result" name="result"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_date">Date:</label>
+                                            <input type="date" class="form-control" id="id_date" name="date">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_file_upload">File Upload:</label>
+                                            <input type="file" class="form-control-file" id="id_file_upload" name="file_upload">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                    {% if saved_lab_tests %}
+                                        <h5>Saved Lab Tests:</h5>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Test Name</th>
+                                                    <th>Result</th>
+                                                    <th>Date</th>
+                                                    <th>File</th>
+                                                    <th>Date Added</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for lab_test in saved_lab_tests %}
+                                                    <tr>
+                                                        <td>{{ lab_test.get_test_name_display }}</td>
+                                                        <td>{{ lab_test.result }}</td>
+                                                        <td>{{ lab_test.date }}</td>
+                                                        <td>{{ lab_test.file_upload }}</td>
+                                                        <td>{{ lab_test.timestamp }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                        <p>No lab tests found for this patient.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Add other tab content sections as needed -->
+                        <!-- Example:
+                        <div class="tab-pane fade" id="v-pills-vaccine" role="tabpanel" aria-labelledby="v-pills-vaccine-tab">
+                            Vaccine Tab Content
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-allergy" role="tabpanel" aria-labelledby="v-pills-allergy-tab">
+                            Allergy Tab Content
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
